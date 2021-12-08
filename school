@@ -1,0 +1,43 @@
+import logging
+from re import template
+from flask import Flask, render_template, request, redirect
+from flask.helpers import url_for
+
+from flask.templating import render_template
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello_world():
+    return "<p>lol<p>"
+
+
+@app.route("/realhome")
+def realhome():
+    return render_template("realhome.html")
+
+@app.route("/seondpage")
+def secondpage():
+    return render_template("secondpage.html")
+
+
+@app.route("/thirdpage")
+def thirdpage():
+    return render_template("thirdpage.html")
+
+@app.route("/fourthpage")
+def fourthpage():
+    return render_template("fourthpage.html")
+
+
+@app.route("/fifthpage")
+def fifthpage():
+    return render_template("fifthpage.html")
+
+
+
+if __name__ == '__main__':
+     
+    # run() method of Flask class runs the application
+    # on the local development server.
+    app.run()
