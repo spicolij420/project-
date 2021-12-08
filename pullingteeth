@@ -1,0 +1,844 @@
+
+import logging
+from re import template
+from flask import Flask, render_template, request, redirect
+from flask.helpers import url_for
+
+from flask.templating import render_template
+
+import random
+from time import sleep
+import string
+app = Flask(__name__)
+
+
+
+
+
+
+########################## BEN BEN STEVE VARIABLE STUFF ##################################################################
+code_dict = {'A':'CaB', 'B':'CBaaa', 'C':'CBaBa', 'D':'CBaa','E':'Ca', 'F' : 'CaaBB', 'G':'CBBa', 'H':'Caaaa','I':'Caa','J':'CaBBB',
+'K':'CBaB','L' : 'CaBBaa', 'M':'CBBB','N' : 'CaaBBa', 'O' : 'CaBaBa','P':'CaBBa', 'Q':'CBBaB', 'R':'CaBa', 'S':'Caaa', 'T':'CB', 'U':'CaaB', 'V':'CaaaB',
+'W':'CaBB', 'X':'CBaaB', 'Y':'CBaBB', 'Z':'CBBaa', 'a':'aB', 'b':'Baaa', 'c':'BaBa', 'd':'Baa','e':'a', 'f' : 'aaBB', 'g':'BBa', 'h':'aaaa',
+'i':'aa','j':'aBBB', 'k':'BaB','l' : 'aBBaa', 'm':'BBB','n' : 'aaBBa', 'o' : 'aBaBa','p':'aBBa', 'q':'BBaB', 'r':'aBa', 's':'aaa',
+ 't':'B', 'u':'aaB', 'v':'aaaB', 'w':'aBB', 'x':'BaaB', 'y':'BaBB', 'z':'BBaa', ',' : ',', '!':'!', '.':'.', "'" : "'", '1':'aBaBaBa', '2':'BaBaBa', '3':'aBaaBaBa', '4':'BaBBaB', '5':'aBBaBBa', '6':'BaBaBaaB', '7':'aaaBaB','8' : 'abbababab', '9' :  'abbb','0':'abbaaba', '"':'"','-':'aBBaBaB','_':'BaBabaaB',':':':',';':';',')':')','(':'(','/':'/'
+}
+#set shift value at 5
+Shiftbbs = 5
+#create Alphabet in a string for a simple ceaser cipher
+alpha = 'abcdefghijklmnopqrstuvwxyz'
+#class containing all encryption and decryption related functions
+
+###############################################################################################################################
+
+######################## SHAELA LIAM NOAH VARIABLES ################################################################################
+
+alphabet = [" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",  ",", ";", ":", "."]
+new_alphabet = random.sample(alphabet, len(alphabet))
+appendix ="!"
+new_alphabet = new_alphabet +[appendix]
+#####################################################################################################################################3
+
+
+############################# ZACH LEO BRADY VARIABLES #########################################################################
+letterlist = string.ascii_letters + " ,."
+
+#Function that finds position of letter input to function in the "letter list"
+def findposition(letter):
+    pos = 0
+    #Loops through entire letter list
+    for i in letterlist:
+        #Adds one to position value to keep track of position of letter input
+        pos += 1
+        #If i is the letter inputted, we have found the position, so return it!
+        if i == letter:
+            return pos
+#################################################################################################################################
+
+############################### Casey, Jacob, Zach G #################################################################
+#Encryption Variables
+numberencrypt = []
+enromannumlist = []
+c = "!"
+romannum = [(1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'), (100, 'C'), (90, 'XC'), #Defines each Int as Roman Num
+           (50, 'L'), (40, 'XL'), (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')]
+
+#Decryption Variables
+deromannumlist = []
+testlist = []
+shiftedlist = []
+unshiftedlist = []
+numlist = []
+textlist = []
+c = "!"
+n = 2
+posshift = 16
+negshift = -16
+#################################################################################################################################3
+
+############################################## GROUP 6 VARIABLES ####################################################################
+
+#message = input('What do you wish to say? Please type only in lowercase.')
+
+alphabet6 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+key = 1
+encrypt6 = ''
+
+#######################################################################################################################
+
+##################################################### GROUP 4 VARIABLES #########################################################3
+
+alpha_lowerlist = list(string.ascii_lowercase)
+alpha_upperlist = list(string.ascii_uppercase)
+
+#####################################################################################################################
+
+
+
+
+
+@app.route("/index.html")
+def home():
+    return render_template("index.html")
+
+
+@app.route("/group3home")
+def group3home():
+    return render_template("group3home.html")
+@app.route("/group3encrypt", methods = ["GET", "POST"])
+def group3encrypt():
+    if request.method =="POST":
+        user_word = request.form["nmg4e"]
+        def encrypt3(word):
+            #reverse word
+            word = ''.join(reversed(word))
+            word = list(word)
+            end_list = []
+            #anti-cheat
+            if len(word) == 1:
+                end_list.append(word[0])
+            else:
+                for letter in word:
+                    #if letter is lowercase
+                    if letter in alpha_lowerlist:
+                        #get position of letter
+                        letter_pos = alpha_lowerlist.index(letter)
+                        #shift it over 2
+                        new_letter = letter_pos + 2
+                        #if letter goes over 26, set back to 0
+                        if new_letter >= 26:
+                            new_letter = new_letter - 26
+                        #new position of letter
+                        new_pos = alpha_lowerlist[new_letter]
+                        #add letter to end list
+                        end_list.append(new_pos)
+                    #if letter is uppercase
+                    elif letter in alpha_upperlist:
+                    #Do same thing as lowercase
+                        letter_pos = alpha_upperlist.index(letter)
+                        new_letter = letter_pos + 2
+                        if new_letter >= 26:
+                            new_letter = new_letter - 26
+                        new_pos = alpha_upperlist[new_letter]
+                        new_pos = new_pos.lower()
+                        end_list.append(new_pos)
+                    #if there is a space add the space
+                    elif letter == ' ':
+                        end_list.append(' ')
+                    #if there is a comma or period
+                    elif letter == ',' or letter == '.':
+                        end_list.append(letter)
+            #convert end list to a string
+            str1 = ""
+            for ele in end_list:
+                str1 += ele
+            return str1
+        return f"<h1>{encrypt3(user_word)}</h1>"
+    else:
+        return render_template("group3encryptform.html")
+    
+@app.route("/group3decrypt", methods = ['POST', "GET"])
+def group3decrypt():
+    if request.method =="POST":
+        user_word = request.form["nmg3d"]
+        def decrypt(word):
+        #reverse word
+            word = ''.join(reversed(word))
+            #string to list
+            word = list(word)
+            end_list = []
+            #anti cheat
+            if len(word) == 1:
+                end_list.append(word[0])
+            else:
+                for letter in word:
+                    if letter in alpha_lowerlist:
+                        letter_pos = alpha_lowerlist.index(letter)
+                        #shift letter back over
+                        new_letter = letter_pos - 2
+                        #if letter goes over 26, set back to 0
+                        if new_letter >= 26:
+                            new_letter = new_letter - 26
+                        new_pos = alpha_lowerlist[new_letter]
+                        end_list.append(new_pos)
+                    #if letter uppercase
+                    elif letter in alpha_upperlist:
+                        #Do same thing as lowercase
+                        letter_pos = alpha_upperlist.index(letter)
+                        new_letter = letter_pos - 2
+                        if new_letter >= 26:
+                            new_letter = new_letter - 26
+                        new_pos = alpha_upperlist[new_letter]
+                        end_list.append(new_pos)
+                    elif letter == ' ':
+                        end_list.append(' ')
+                    elif letter == ',' or letter == '.':
+                        end_list.append(letter)
+
+            str1 = ""
+            for ele in end_list:
+                str1 += ele
+            return str1
+        return f"<h1> Decrypted text below</h1><p><h1>{decrypt(user_word)}</h1></p>"
+    else:
+        return render_template("group3decrypt.html")
+
+
+
+
+
+
+
+@app.route("/group6")
+def group6home():
+    return render_template("group6home.html")
+@app.route("/group6encrypt", methods = ["GET", "POST"])
+def group6encrypt():
+    if request.method == "POST":
+        
+        message = request.form["nmg6e"]
+        
+        output = ""
+        
+        for x in message:
+            for letter in alphabet:
+                if x == letter:
+                    currentposition = alphabet.index(letter)
+                    # Y and Z will move to the left and become W and X
+                    if currentposition == 24 or currentposition == 25:
+                        encryptedletter = currentposition - 2	
+                        output = output + alphabet[encryptedletter]
+                        
+                        #VOWELS
+                    elif currentposition == 0:
+                        encryptedletter = 'l'
+                        output = output + encryptedletter
+                    elif currentposition == 4:
+                        encryptedletter = 'm'
+                        output = output + encryptedletter
+                    elif currentposition == 8:
+                        encryptedletter = 'n'
+                        output = output + encryptedletter
+                    elif currentposition == 14: #the letter O
+                        encryptedletter = 'o'
+                        output = output + encryptedletter
+                    elif currentposition == 20:
+                        encryptedletter = 'p'
+                        output = output + encryptedletter
+                    
+                    #LMNOP
+                    elif currentposition == 11: 
+                        encryptedletter = 'a' #L
+                        output = output + encryptedletter
+                    elif currentposition == 12:
+                        encryptedletter = 'e' #M
+                        output = output + encryptedletter
+                    elif currentposition == 13: #N
+                        encryptedletter = 'i'
+                        output = output + encryptedletter
+                    elif currentposition == 14: #didnt have time to do any 'and' statements with O
+                        encryptedletter = 'o'
+                        output = output + encryptedletter
+                    elif currentposition == 15:
+                        encryptedletter = 'u'
+                        output = output + encryptedletter
+                        
+                    else:
+                        #if not y or z, every letter moves two the right. ex) b will become d
+                        encryptedletter = currentposition + 2
+                        #if a letter moves and becomes a vowel, it returns as Xx
+                        if currentposition + 2 == 0:
+                            encryptedletter = 'v'
+                            output = output + encryptedletter
+                        elif currentposition + 2 == 4:
+                            encryptedletter = 'w'
+                            output = output + encryptedletter
+                        elif currentposition + 2 == 8:
+                            encryptedletter = 'x'
+                            output = output + encryptedletter
+                        elif currentposition + 2 == 14: #didnt have time to make 'and' statements with M
+                            encryptedletter = 'y'
+                            output = output + encryptedletter
+                        elif currentposition + 2 == 20:
+                            encryptedletter = 'z'
+                            output = output + encryptedletter
+                        
+                        #if a number moves and becomes LMNOP, it returns as Zx (x is a used as a variable here)
+                        elif currentposition + 2 == 11:
+                            encryptedletter = 'g'
+                            output = output + encryptedletter
+                        elif currentposition + 2 == 12:
+                            encryptedletter = 'h'
+                            output = output + encryptedletter
+                        elif currentposition + 2 == 13:
+                            encryptedletter = 'i' #L
+                            output = output + encryptedletter
+                        elif currentposition + 2 == 14:
+                            encryptedletter = 'j' #M
+                            output = output + encryptedletter
+                        elif currentposition + 2 == 15:
+                            encryptedletter = 'k' #N
+                            output = output + encryptedletter
+                        else:
+                            output = output + alphabet[encryptedletter]		
+        
+        return f"<h1>Encrypted text below</h1><p><h1>{output}</h1>"
+    else: 
+        return render_template("6encryptform.html")
+    
+@app.route("/group6decrypt", methods = ["GET", "POST"])
+def group6decrypt():
+    if request.method == "POST":
+        
+        answer = request.form["nmg6d"]
+        
+        input = ""
+        give = ''
+        decrypt6 = ''
+        for x in answer:
+            for letter in alphabet:
+                if x == letter:
+                    
+                    #VOWELS
+                    if encryptedletter == 'l':
+                        decryptedletter = 'a'
+                        give = give + decryptedletter
+                    elif encryptedletter == 'm':
+                        decryptedletter = 'e'
+                        give = give + decryptedletter
+                    elif encryptedletter == 'n':
+                        decryptedletter = 'i'
+                        give = give + decryptedletter
+                    elif encryptedletter == 'o': #the letter O
+                        decryptedletter = 'o'
+                        give = give + decryptedletter
+                    elif currentposition == 'p':
+                        decryptedletter = 'u'
+                        give = give + decryptedletter
+                    
+                    #LMNOP
+                    elif encryptedletter == 'a': 
+                        decryptedletter = 'l' #L
+                        give = give + decryptedletter
+                    elif encryptedletter == 'e':
+                        decryptedletter = 'm' #M
+                        give = give + decryptedletter
+                    elif encryptedletter == 'i': #N
+                        decryptedletter = 'n'
+                        give = give + decryptedletter
+                    #elif currentposition == 14: #didnt have time to do any 'and' statements with O
+                        #encryptedletter = 'four'
+                        #output = output + encryptedletter
+                    elif currentposition == 'u':
+                        decryptedletter = 'p'
+                        give = give + decryptedletter
+                        
+                    else:
+                        #if a letter moves and becomes a vowel, it returns as Xx
+                        #if currentposition + 2 == 0:
+                            #encryptedletter = 'Xa'
+                            #output = output + encryptedletter
+                        if encryptedletter == 'w':
+                            decryptedletter = 'c'
+                            give = give + decryptedletter
+                        elif encryptedletter == 'x':
+                            decryptedletter = 'g'
+                            give = give + decryptedletter
+                        #elif currentposition + 2 == 14: #didnt have time to make 'and' statements with M
+                            #encryptedletter = 'Xo'
+                            #output = output + encryptedletter
+                        elif encryptedletter == 'z':
+                            encryptedletter = 's'
+                            give = give + decryptedletter
+                        
+                        #if a number moves and becomes LMNOP, it returns as Zx		
+                        elif encryptedletter == 'g':
+                            decryptedletter = 'j'
+                            give = give + decryptedletter
+                        elif encryptedletter == 'h':
+                            decryptedletter = 'k'
+                            give = give + decryptedletter
+                            
+                            
+                    currentposition = alphabet.index(letter)
+                    #if encrypted letter is W or X, its going to move back to Y or Z
+                    if currentposition == 22 or currentposition == 23:
+                        decryptedletter = currentposition + 2	
+                        give = give + alphabet[decryptedletter]
+                    else:
+                        #if not y or z, every letter moves two the right. ex) b will become d
+                        decryptedletter = currentposition - 2
+                        give = give + alphabet[decryptedletter]		
+					
+        return f"<h1>Decrypted text below</h1><p><h1>{give}</h1></p>"
+    
+    
+    else:
+        return render_template("6decryptionform.html")
+    
+           
+
+
+
+@app.route("/caseyjacobzachg")
+def caseyjacobzachg():
+    return render_template("caseyhome.html")
+
+'''@app.route("/caseyencrypt", methods = ["POST", "GET"])
+def caseyencrypt():
+    if request.method == "POST":
+        
+            decrypttextcasey = request.form["nmce"]
+            
+            
+            
+            
+            
+            #Function to Switch Letters to Roman Numerals
+            def IntRoman(num):
+                roman = '' #Blank Str.
+
+                while num > 0:
+                    for i, r in romannum:
+                        while num >= i:
+                            roman += r
+                            num -= i
+                return roman
+
+            #Function to Switch Roman Numerals back to Int   
+            def RomanInt(encrypttext):
+
+                roman = {'C':100, 'XC':90, 'L':50, 'XL':40,'X':10, 'IX':9, 'V':5, 'IV':4,'I':1, '.':-50} #Defines each Roman Num as Int
+                i = 0
+                num = 0
+                while i < len(encrypttext):
+                    if i+1<len(encrypttext) and encrypttext[i:i+2] in roman:
+                        num+=roman[encrypttext[i:i+2]]
+                        i+=2
+                    else:
+                        num+=roman[encrypttext[i]]
+                        i+=1
+                return num
+
+            #Ceaser Cipher Shift
+            def CeasarCipher(text, m):
+                if m == 0: 
+                    return text
+                else:
+                    cipher = ""
+                    for x in range(len(text)):
+                        if text[x].isalpha():
+                            if text[x].islower():
+                                cipher += chr((ord(text[x]) - 97 + m) % 26 + 97)
+                            else:
+                                cipher += chr((ord(text[x]) - 65 + m) % 26 + 65)
+                        else:
+                            cipher += text[x]
+                    return cipher
+
+            #Primary Functions
+            
+
+                #Encryption Function
+            def encrypt():
+                    decrypttextcasey = input("Input Unencrypted Message: ")
+
+                    for d in decrypttextcasey:
+                        if d.isnumeric():
+                            print("- Input is invalid [NUM_ERROR]")
+                            encrypt()
+
+                    #Shift Text 16 Places
+                    for shift in decrypttextcasey:
+                        shiftedlist.append(CeasarCipher(shift, posshift))
+
+                    #Shift Alphabet -> Number
+                    for l in shiftedlist:
+                        numberencrypt.append(ord(l)) #Ord = Built In Str -> Num Function
+                    
+                    #Convert Number -> Roman Numeral
+                    for num in numberencrypt:
+                        enromannumlist.append(IntRoman(num))
+                    
+                    #Print Encryption
+                    print("Your encrypted code is: ", (' '.join(enromannumlist)).upper()) #Makes List -> Str
+                    print('')
+                    
+
+            #Decryption Function
+            def decrypt():
+                        
+                m = 0
+                encrypttext = input("Input Encrypted Message: ")
+                #Checks entire Encrypted Text
+                while m <= len(encrypttext):
+                    for e in encrypttext:
+                        #If char in encrypttext is lowercase -
+                        if e.islower():
+                            print(" - Input is invalid [CAP_ERROR]")
+                            decrypt()
+                        #If char in encrypttext is an int -
+                        elif e.isnumeric():
+                            print(" - Input is invalid [NUM_ERROR]")
+                            decrypt()
+                        elif e.isupper():
+                            #If char in encrypttext is not a roman numeral -
+                            while e not in ["C", "L", "X", "V", "I"]:
+                                print(" - Input is invalid [TEXT_ERROR]")
+                                decrypt()
+
+                    deromannumlist = encrypttext.split() #Split = List -> Str
+
+                    #Convert Roman Numeral -> Number
+                    for romannum in deromannumlist:
+                        numlist.append(RomanInt(romannum))
+                                
+                    #Convert Number -> Corresponding Letter
+                    for num in numlist:
+                        textlist.append(chr(num)) #Chr = Built in Num -> Str Function
+                                        
+                    for unshift in textlist:
+                        unshiftedlist.append(CeasarCipher(unshift, negshift))
+                    
+                    unshiftedstr = ''.join(unshiftedlist)
+                    
+                    spaceshifted = unshiftedstr.replace("{", " ")
+
+                    print("Your decrypted code is:", (''.join(spaceshifted)).lower())
+    
+        
+            return f"<h1>{(' '.join(enromannumlist)).upper()}</h1>"
+    
+    else:
+         
+        return render_template("caseyencryptform.html")'''
+        
+
+    
+
+
+
+@app.route("/bradyleozach")
+def bradyleozach():
+    return render_template("bradyleozachhome.html")
+
+@app.route("/bradyleozachencrypt", methods = ["POST", "GET"])
+def bradyleozachencrypt():
+    if request.method == "POST":
+        
+        inputblz1 = request.form["nmblz"]
+        inputblz2 = str(inputblz1)
+        def encryptblz(inputblz):
+            layer1 = ""
+            #Loops through letters in input in reverse order and adds them to new string layer1
+            for i in reversed(inputblz2):
+                layer1 = layer1+i
+            #Layer 2: Move even letter positions over by 4 positions, move odd letter positions over by 3 positions
+            layer2 = ""
+            #curpos keeps track of what letter is currently being looped through in the string
+            curpos = 0
+            for i in layer1:
+                curpos += 1
+                #Check if letter being looped through can be moved forward without going over the end of the letter list
+                if int(findposition(i)) < len(letterlist) - 4:
+                    #If position of current letter being looped through is even, move position by 4
+                    if curpos % 2 == 0:
+                        newpos = int(findposition(i)) + 4
+                    #Else, since the position is odd, move position by 3
+                    else:
+                        newpos = int(findposition(i)) + 3
+                    #Finally, add new letter with moved position to the final encrypted string
+                    layer2 = layer2+letterlist[newpos]
+                #If the letter does go over the end of the letter list, we need to be sure to bring it back to the start of the letter list, so we will remove the length of the letter list from the new position
+                else:
+                    #If position of current letter being looped through is even, move position by 4 minus letter list length to make sure it doesnt go over the index range
+                    if curpos % 2 == 0:
+                        newpos = int(findposition(i)) + 4 - len(letterlist)
+                    #Else, since the position is odd, move position by 3 minus letter list length to make sure it doesnt go over the index range
+                    else:
+                        newpos = int(findposition(i)) + 3 - len(letterlist)
+                    #Finally, add new letter with moved position to the final encrypted string
+                    layer2 = layer2+letterlist[newpos]
+            #Return final encrypted string
+            return layer2
+        
+    
+        return f"<h1>Encrypted text below</h1><p><h2>{encryptblz(inputblz2)}</h2></p>"
+    else:
+        return render_template("bradyencryptform.html")
+    
+    
+@app.route("/bradyleozachdecrypt", methods = ["POST", "GET"])
+def bradyleozachdecrypt():
+    if request.method == "POST":
+        inputblz4 = request.form["nmblzd"]
+        
+        
+        def decryptblz(inputblz4):
+            #Layer 1: Move letter positions back to original positions
+            layer1 = ""
+            #curpos keeps track of what letter is currently being looped through in the string
+            curpos = 0
+            for i in inputblz4:
+                curpos += 1
+                #Check if letter being looped through can be moved back without going under the beginning of the letter list
+                if int(findposition(i)) < len(letterlist) - 4:
+                    #If position of current letter being looped through is even, move position back by 4 (for some reason it wants 6 here?)
+                    if curpos % 2 == 0:
+                        newpos = int(findposition(i)) - 6
+                    #Else, since the position is odd, move position by 3 (it wants 5 here for some reason too?)
+                    else:
+                        newpos = int(findposition(i)) - 5
+                    layer1 = layer1+letterlist[newpos]
+                else:
+                    #If position of current letter being looped through is even, move position back by length of letter list minus 4 (for some reason it wants 6 here?)
+                    if curpos % 2 == 0:
+                        newpos = (int(findposition(i)) - len(letterlist)) - 6
+                    #Else, since the position is odd, move position by length of letter list minus 3 (it wants 5 here for some reason too?)
+                    else:
+                        newpos = (int(findposition(i)) - len(letterlist)) - 5
+                    layer1 = layer1+letterlist[newpos]
+            #Layer 2: Unreverse letters
+            layer2 = ""
+            #Loops through letters in input in reverse order and adds them to new string layer2
+            for i in reversed(layer1):
+                layer2 = layer2+i
+            #Return final decrypted string
+            return layer2
+        return f"<h1>Decyrpted text below</h1><p><h2>{decryptblz(inputblz4)}</h2></p>"
+
+    else: 
+        return render_template("bradydecryptionform.html")
+    
+    
+
+
+@app.route("/encrypt", methods = ["POST", "GET"])
+def encrypt():
+    if request.method == "POST":
+        user = request.form["nm"]
+        encrypt = ""    
+        ltext = list(user)
+    
+        
+        
+        for symbol in ltext: 
+                for letter in new_alphabet:
+                    if symbol == letter:
+                        position = new_alphabet.index(letter)
+                        #this tells it if theres an index error it should make like a honor badger and not care.  
+                        try:
+                            encrypt = encrypt +new_alphabet[position + shift]
+                        except IndexError:
+                            continue
+        return f"<h1>ENCRYPTED TEXT:</h1><h2>{encrypt}</h2>"
+        
+    else:
+        return render_template("page.html")
+    
+@app.route("/benbensteve")
+def benbensteve():
+    return render_template("benbensteve.html")
+
+@app.route("/benbenencrypt", methods = ["POST", "GET"])
+def benbenencrypt():
+    if request.method == "POST":
+        
+        
+        message = request.form["nmbbs"]
+    
+          
+            
+      
+        shifted = ""
+        coded =""
+    #create empty strings to store the encrypted values in.
+
+        
+        #shift the original imouted message by going through each letter, looking up its place in the alphabet(alpha), and then add the shift amount  to the letters placement in the alphabet, divide by 26(because their's 26 letters), and then add the shifted letters to the 'shifted' string, and if the letter is'nt in the alphabet, just add it to the string.                                                 
+        for letter in message:
+            if letter in alpha:
+                letterPlace = alpha.find(letter)
+                shiftedPlace = (letterPlace + Shiftbbs)%26
+                shifted += alpha[shiftedPlace]
+            else:
+                shifted += letter
+    
+        #after th message is initialy shifted, loop through the shifted message and anything thats not a space gets looked up in the dictonary and converted to morse code then added to a new empty string, coded and add a space to repersent that its a letter. If the message is one character or less tho, say that they must enter more then one letter. 
+        for letter in shifted:
+            
+            if letter != ' ':
+                    
+                coded += code_dict[letter] + ' '
+            else:
+                coded += letter
+        if len(message) <= 1:
+            print('You must enter more than 1 character')
+        else:
+            print(coded)
+                
+        
+        return f"<p><h1> Decrypted text here</h1></p><h2>{coded}</h2>"
+    else: 
+        return render_template("benbensteveencryptform.html")
+    
+
+@app.route("/benbendecrypt", methods = ["POST", "GET"])
+def benbendecrypt():
+    if request.method == "POST":
+    
+        coded = request.form["nmbbsd"]
+    
+        
+        coded += ' '
+        uncoded = ''
+        unshifted = ''
+        citext = ''
+	    #for loop that first figures out what is a letter and whats a space and then uses keys to reverse the encryption
+        for letter in coded:
+	  
+	        # checks for space
+	        if (letter != ' '):
+	            # counter to keep track of space
+	            i = 0
+	            # storing morse code of a single character
+	            citext += letter
+	        # in case of space
+	        else:
+	            # if i = 1 that indicates a new character
+	            i += 1
+	            # if i = 2 that indicates a new word
+	            if i == 2 :
+	                # adding space to separate words
+	                uncoded += ' '
+	            else:
+	                # accessing the keys using their values (reverse of encryption)
+	                uncoded += list(code_dict.keys())[list(code_dict.values()).index(citext)]
+	                #resets citext
+	                citext = ''
+	    #unshifts shifted message by going through every letter in the uncoded string and finding its place in the alfabet and subtracting the shift amount and divideing by 26 and then adding to the unshifted string(so just the reverse of encrypting)
+        for letter in uncoded:
+	        if letter in alpha:
+                    letterPlace = alpha.find(letter) 
+                    shiftedPlace = (letterPlace - Shiftbbs)%26 
+                    unshifted += alpha[shiftedPlace]
+	        else:
+	            unshifted += letter
+        print(unshifted)
+        return f"<h1>Decrypted text here</h1><p><h2>{unshifted} </h2>"
+    else:
+        return render_template("benbenstevedecryptfarm.html")
+   
+    
+    
+
+    
+    
+
+
+    
+    
+    
+@app.route("/shaelanoahliam")
+def shaela():
+    return render_template("home-shaela.html")
+
+
+@app.route("/login", methods = {"POST", "GET"})
+def login(): 
+    if request.method == "POST":
+        decry = request.form["nm2"]
+        
+        decrypt = list(decry)
+        shift = 1 
+        
+        decrypted =""
+        
+    
+        for symbol in decrypt: 
+            for letter in new_alphabet:
+                if symbol == letter:
+                    position = new_alphabet.index(letter)
+                    #this tells it if theres an index error it should make like a honey badger and not care.  
+                    try:
+                        decrypted = decrypted +new_alphabet[position - shift]
+                    except IndexError:
+                        continue
+        
+        
+        return f"<p><h1> Decrypted text here</h1></p><h2>{decrypted}</h2>"
+    else:
+        return render_template("page2.html")
+
+
+
+
+shift = 1
+
+
+
+    
+
+
+ 
+
+
+
+extrastuff =["a", "b", "c"]
+    
+    
+
+
+'''@app.route("/<text>")
+def user (text):
+    encrypt = ""    
+    ltext = list(text)
+    
+   
+    
+    
+    for symbol in ltext: 
+            for letter in new_alphabet:
+                if symbol == letter:
+                    position = new_alphabet.index(letter)
+                    #this tells it if theres an index error it should make like a honor badger and not care.  
+                    try:
+                        encrypt = encrypt +new_alphabet[position + shift]
+                    except IndexError:
+                        continue
+    return f"<h1>ENCRYPTED TEXT:</h1><h2>{encrypt}</h2>"'''
+
+    
+    
+
+
+
+    
+
+
+if __name__ == "__main__":
+    app.run()
+
+
+
+
